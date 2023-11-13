@@ -34,7 +34,8 @@ export class LoginPageComponent {
         console.error(error);
       }
     });
-
+  
+    
   }
 
 }
