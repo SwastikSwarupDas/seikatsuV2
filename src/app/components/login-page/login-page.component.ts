@@ -4,6 +4,7 @@ import { MatInput } from '@angular/material/input';
 import { MatSelect } from '@angular/material/select';
 import { MatFormField } from '@angular/material/form-field';
 import { MatOption } from '@angular/material/core';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-login-page',
@@ -13,7 +14,7 @@ import { MatOption } from '@angular/material/core';
 export class LoginPageComponent {
   loginForm!:FormGroup;
 
-  constructor(private formBuilder:FormBuilder){
+  constructor(private formBuilder:FormBuilder, private apiService:ApiService){
     this.loginForm = this.formBuilder.group({
       username:["",Validators.required],
       password:['',[Validators.required, Validators.minLength(8)]],
@@ -22,8 +23,18 @@ export class LoginPageComponent {
     });
   }
 
-
   onSubmit(){
     console.log(this.loginForm.value);
+    const userData = this.loginForm.value;
+    this.apiService.addUser(userData).subscribe({
+      next:response=>{
+        console.log(response);
+      },
+      error:error=>{
+        console.error(error);
+      }
+    });
+
   }
+
 }
