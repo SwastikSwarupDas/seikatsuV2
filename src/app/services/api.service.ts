@@ -4,13 +4,14 @@ import { PasswordHashService } from './password-hash.service';
 import { Observable } from 'rxjs';
 
 export interface user {
-  name: string;
+  _id: string;
+  username: string;
+  password: string;
   email: string;
-  phone: string;
-  uuid: string;
-  presence: Record<string, any>;
-  id: string;
+  usertype: string;
+  propertyIds: string[];
 }
+
 
 @Injectable({
   providedIn: 'root'
@@ -31,9 +32,14 @@ export class ApiService {
       return this.database.post('https://localhost:7122/api/Users', userdata);
   }
 
-  getAllusers():Observable<user[]>{
+  getAllUsers():Observable<user[]>{
     this.user$ = this.database.get<user[]>('https://localhost:7122/api/Users');
     return this.user$;
+  }
+
+  comparePasswords(enteredPassword:string,hashedPassword:string):boolean{
+    const hashedEnteredPassword = this.passwordHashService.hashPassword(enteredPassword);
+    return hashedEnteredPassword === hashedPassword;
   }
 
 }
