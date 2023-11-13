@@ -1,12 +1,23 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { PasswordHashService } from './password-hash.service';
+import { Observable } from 'rxjs';
 
+export interface user {
+  name: string;
+  email: string;
+  phone: string;
+  uuid: string;
+  presence: Record<string, any>;
+  id: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
+
+  user$!:Observable<user[]>;
 
   password        : string='';
   hashedPassword  : string='';
@@ -18,6 +29,11 @@ export class ApiService {
       userdata.password=hashedPassword;
 
       return this.database.post('https://localhost:7122/api/Users', userdata);
+  }
+
+  getAllusers():Observable<user[]>{
+    this.user$ = this.database.get<user[]>('https://localhost:7122/api/Users');
+    return this.user$;
   }
 
 }
