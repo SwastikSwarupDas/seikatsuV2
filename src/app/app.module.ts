@@ -19,6 +19,7 @@ import { OldUserLoginComponent } from './components/old-user-login/old-user-logi
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 import {MatRippleModule} from '@angular/material/core';
+import { YourAccountComponent } from './components/your-account/your-account.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import {MatRippleModule} from '@angular/material/core';
     NavbarComponent,
     LoginPageComponent,
     MapComponent,
-    OldUserLoginComponent
+    OldUserLoginComponent,
+    YourAccountComponent
   ],
   imports: [
     MatFormFieldModule,

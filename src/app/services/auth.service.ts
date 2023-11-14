@@ -1,52 +1,50 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subject,Observable} from 'rxjs';
+import { BehaviorSubject,Observable} from 'rxjs';
 import { ApiService,user } from './api.service';
-import {first } from 'rxjs/operators';
+import {first, withLatestFrom } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private isAuthenticated:boolean=false;
-  private username:string = '';
-  private userType:string='';
-  private authChangedSource: Subject<void> = new Subject<void>();
+  private isAuthenticatedSubject :BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private usernameSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  private userTypeSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  
+  // private authChangedSource: Subject<void> = new Subject<void>();
 
   constructor(private router:Router, private apiService:ApiService) { }
 
   loginSuccess(userType:string){
+    console.log(this.isAuthenticatedSubject + " beforethe apiservice call")
     this.apiService.user$.pipe(first()).subscribe((users:user[])=>{
       const latestUser = users[users.length-1];
-      this.username = latestUser.username;
-      this.userType = latestUser.usertype;
-      this.authChangedSource.next();
+      this.isAuthenticatedSubject.next(true);
+      this.usernameSubject.next(latestUser.username);
+      this.userTypeSubject.next(latestUser.usertype);
       this.router.navigate(['']);
     });
+    console.log(this.isAuthenticatedSubject + "after balle balle")
   }
 
-  isAuthenticatedUser():boolean{
-    return this.isAuthenticated;
+  isAuthenticatedUser(): Observable<boolean>{
+    return this.isAuthenticatedSubject.asObservable();
   }
 
-  getUsername():string{
-    return this.username;
+  getUsername():Observable<string>{
+    return this.usernameSubject.asObservable();
   }
-
-  getUserType():string{
-    return this.userType;
+  
+  getUserType():Observable<string>{
+    return this.userTypeSubject.asObservable();
   }
 
   logout(){
-    this.isAuthenticated = false;
-    this.userType = '';
-    this.username = '';
-    this.authChangedSource.next();
+    this.isAuthenticatedSubject.next(false);
+    this.userTypeSubject.next('');
+    this.usernameSubject.next('');
     this.router.navigate(['login'])
-  }
-
-  get authChanged():Observable<void>{
-    return this.authChangedSource.asObservable();
   }
 
 }

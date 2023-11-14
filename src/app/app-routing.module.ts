@@ -4,6 +4,7 @@ import { HomepageComponent } from './components/homepage/homepage.component';
 import { MapComponent } from './components/map/map.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { OldUserLoginComponent } from './components/old-user-login/old-user-login.component';
+import { YourAccountComponent } from './components/your-account/your-account.component';
 
 const routes: Routes = [
   {
@@ -17,7 +18,10 @@ const routes: Routes = [
   },
   {
     path:"login",component:OldUserLoginComponent
-  }
+  },
+  {
+    path:"acc",component:YourAccountComponent
+  },
 ];
 
 @NgModule({
