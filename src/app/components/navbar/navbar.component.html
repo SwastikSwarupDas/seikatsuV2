@@ -21,11 +21,17 @@
         </div>
         <div class="right">
             <div class="account">
-                <button  [matMenuTriggerFor]="menu"><i class="ri-user-line"></i></button>
+                <button *ngIf="!isAuthenticated" [matMenuTriggerFor]="menu"><i class="ri-user-line"></i></button>
+                <button *ngIf="isAuthenticated && userType === 'buyer'" [matMenuTriggerFor]="menu"><i class="ri-user-line"></i></button>
+                <button *ngIf="isAuthenticated && userType === 'seller'" [matMenuTriggerFor]="menu"><i class="ri-user-line"></i></button>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item>Sign Up</button>
-                    <button mat-menu-item><a routerLink="login">Login</a></button>
+                  <button mat-menu-item *ngIf="!isAuthenticated">Sign Up</button>
+                  <button mat-menu-item *ngIf="!isAuthenticated"><a routerLink="login">Login</a></button>
+                  <button mat-menu-item *ngIf="isAuthenticated">Your Account</button>
+                  <button mat-menu-item *ngIf="isAuthenticated">Your Account</button>
+                  <button mat-menu-item *ngIf="isAuthenticated" (click)="logout()">Logout</button>
                 </mat-menu>
+        
             </div>
         </div>
     </div>
