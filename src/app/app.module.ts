@@ -20,6 +20,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 import {MatRippleModule} from '@angular/material/core';
 import { YourAccountComponent } from './components/your-account/your-account.component';
+import { UploadpropertyformComponent } from './components/uploadpropertyform/uploadpropertyform.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { YourAccountComponent } from './components/your-account/your-account.com
     LoginPageComponent,
     MapComponent,
     OldUserLoginComponent,
-    YourAccountComponent
+    YourAccountComponent,
+    UploadpropertyformComponent
   ],
   imports: [
     MatFormFieldModule,

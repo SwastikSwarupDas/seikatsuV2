@@ -5,6 +5,7 @@ import { MapComponent } from './components/map/map.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { OldUserLoginComponent } from './components/old-user-login/old-user-login.component';
 import { YourAccountComponent } from './components/your-account/your-account.component';
+import { UploadpropertyformComponent } from './components/uploadpropertyform/uploadpropertyform.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,9 @@ const routes: Routes = [
   {
     path:"acc",component:YourAccountComponent
   },
+  {
+    path:"upload",component:UploadpropertyformComponent
+  }
 ];
 
 @NgModule({

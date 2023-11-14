@@ -12,6 +12,19 @@ export interface user {
   propertyIds: string[];
 }
 
+export interface Properties {
+  _id: string; // replace 'any' with the actual type
+  images: string[]; // replace 'any' with the actual type
+  locationName: string;
+  locationDescription: string;
+  propertyName: string;
+  geoLocation: GeoLocation; // assuming GeoLocation is another interface
+}
+
+export interface GeoLocation{
+  longitude:number;
+  latitude:number;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +32,7 @@ export interface user {
 export class ApiService {
 
   user$!:Observable<user[]>;
+  properties$!:Observable<Properties[]>;
 
   password        : string='';
   hashedPassword  : string='';
@@ -32,9 +46,18 @@ export class ApiService {
       return this.database.post('https://localhost:7122/api/Users', userdata);
   }
 
+  addProperty(propertyData:any){
+    return this.database.post('https://localhost:7122/api/Properties',propertyData);
+  }
+
   getAllUsers():Observable<user[]>{
     this.user$ = this.database.get<user[]>('https://localhost:7122/api/Users');
     return this.user$;
+  }
+
+  getAllProperties():Observable<Properties[]>{
+    this.properties$ = this.database.get<Properties[]>('https://localhost:7122/api/Properties');
+    return this.properties$;
   }
 
   comparePasswords(enteredPassword:string,hashedPassword:string):boolean{

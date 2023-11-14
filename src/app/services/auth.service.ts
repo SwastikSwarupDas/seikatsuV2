@@ -11,6 +11,8 @@ export class AuthService {
   private isAuthenticatedSubject :BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private usernameSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   private userTypeSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  private userIdSubject : BehaviorSubject<string> = new BehaviorSubject<string>('');
+  private userEmailSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   
   // private authChangedSource: Subject<void> = new Subject<void>();
 
@@ -23,6 +25,7 @@ export class AuthService {
       this.isAuthenticatedSubject.next(true);
       this.usernameSubject.next(latestUser.username);
       this.userTypeSubject.next(latestUser.usertype);
+      this.userIdSubject.next(latestUser._id);
       this.router.navigate(['']);
     });
     console.log(this.isAuthenticatedSubject + "after balle balle")
